@@ -47,6 +47,7 @@
 
 <h1>Guess the Number (1-100)</h1>
 
+
 <input type="number" id="guessInput" placeholder="Enter your guess">
 <button onclick="checkGuess()">Submit Guess</button>
 
@@ -61,10 +62,16 @@
     function checkGuess() {
         let userGuess = document.getElementById("guessInput").value;
         attempts++;
+if (userGuess == randomNumber) {
+    document.getElementById("message").innerText = "🎉 You Win Buddy!";
+    document.getElementById("guessInput").disabled = true;
 
-        if (userGuess == randomNumber) {
-            document.getElementById("message").innerText = "🎉 You Win Buddy!";
-            document.getElementById("guessInput").disabled = true;
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+}
         } else if (userGuess > randomNumber) {
             document.getElementById("message").innerText = "Too high!";
         } else {
@@ -72,7 +79,7 @@
         }
 
         document.getElementById("attempts").innerText = "Attempts: " + attempts;
-    }        
+      
  function resetGame() {
     randomNumber = Math.floor(Math.random() * 100) + 1;
     attempts = 0;
@@ -82,7 +89,7 @@
     document.getElementById("guessInput").disabled = false;
  }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 </html>
 
