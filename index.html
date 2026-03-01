@@ -1,90 +1,120 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Number Guessing Game</title>
+  <meta charset="UTF-8" />
+  <title>Number Guessing Game</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Fredoka', sans-serif;
-            text-align: center;
-            margin-top: 80px;
-            background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
-        }
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      text-align: center;
+      margin-top: 80px;
+      background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
+    }
 
-        h1 {
-            color: #ff4fa3;
-        }
+    h1 { color: #ff4fa3; }
 
-        input {
-            padding: 10px;
-            font-size: 18px;
-            width: 150px;
-            border-radius: 15px;
-            border: 2px solid #ffb6d9;
-        }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 160px;
+      border-radius: 15px;
+      border: 2px solid #ffb6d9;
+      outline: none;
+    }
 
-        button {
-            padding: 10px 18px;
-            font-size: 16px;
-            margin: 8px;
-            border: none;
-            background: #ff4fa3;
-            color: white;
-            border-radius: 20px;
-            cursor: pointer;
-        }
+    button {
+      padding: 10px 18px;
+      font-size: 16px;
+      margin: 8px;
+      border: none;
+      background: #ff4fa3;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background: #e63b8c;
-        }
-    </style>
+    button:hover { background: #e63b8c; }
+
+    #message { font-size: 20px; margin-top: 16px; }
+  </style>
 </head>
+
 <body>
 
-<img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="120">
+  <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="120" alt="game icon">
 
-<h1>Guess the Number (1-100)</h1>
+  <h1>Guess the Number (1–100)</h1>
 
-<input type="number" id="guessInput" placeholder="Enter your guess">
-<button onclick="checkGuess()">Submit Guess</button>
+  <input type="number" id="guessInput" placeholder="Enter guess" />
+  <button id="submitBtn">Submit Guess</button>
 
-<p id="message"></p>
-<p id="attempts"></p>
-<button onclick="resetGame()">Play Again</button>
+  <p id="message"></p>
+  <p id="attempts"></p>
 
-<script>
+  <button id="resetBtn">Play Again</button>
+
+  <!-- Confetti library (optional). If it fails to load, the game STILL works. -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
     let randomNumber = Math.floor(Math.random() * 100) + 1;
     let attempts = 0;
 
+    const guessInput = document.getElementById("guessInput");
+    const messageEl = document.getElementById("message");
+    const attemptsEl = document.getElementById("attempts");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
     function checkGuess() {
-        let userGuess = document.getElementById("guessInput").value;
-        attempts++;
+      const userGuess = Number(guessInput.value);
 
-        if (userGuess == randomNumber) {
-            document.getElementById("message").innerText = "🎉 You Win Buddy!";
-            document.getElementById("guessInput").disabled = true;
-        } else if (userGuess > randomNumber) {
-            document.getElementById("message").innerText = "Too high!";
-        } else {
-            document.getElementById("message").innerText = "Too low!";
+      if (!userGuess || userGuess < 1 || userGuess > 100) {
+        messageEl.innerText = "Type a number from 1 to 100 🙂";
+        return;
+      }
+
+      attempts++;
+
+      if (userGuess === randomNumber) {
+        messageEl.innerText = `🎉 You Win! The number was ${randomNumber}.`;
+        guessInput.disabled = true;
+        submitBtn.disabled = true;
+
+        // Safe confetti: only runs if library loaded
+        if (window.confetti) {
+          confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
+      } else if (userGuess > randomNumber) {
+        messageEl.innerText = "Too high!";
+      } else {
+        messageEl.innerText = "Too low!";
+      }
 
-        document.getElementById("attempts").innerText = "Attempts: " + attempts;
-    }        
- function resetGame() {
-    randomNumber = Math.floor(Math.random() * 100) + 1;
-    attempts = 0;
-    document.getElementById("message").innerText = "";
-    document.getElementById("attempts").innerText = "";
-    document.getElementById("guessInput").value = "";
-    document.getElementById("guessInput").disabled = false;
- }
-</script>
+      attemptsEl.innerText = "Attempts: " + attempts;
+    }
+
+    function resetGame() {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      messageEl.innerText = "";
+      attemptsEl.innerText = "";
+      guessInput.value = "";
+      guessInput.disabled = false;
+      submitBtn.disabled = false;
+      guessInput.focus();
+    }
+
+    // Button + Enter key wiring (so clicks ALWAYS work)
+    submitBtn.addEventListener("click", checkGuess);
+    resetBtn.addEventListener("click", resetGame);
+    guessInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") checkGuess();
+    });
+  </script>
 
 </body>
 </html>
-
-
-
