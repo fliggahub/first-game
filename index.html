@@ -1,143 +1,216 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Number Guessing Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bhalu Guessing Game</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Cute font -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Fredoka', sans-serif;
-            text-align: center;
-            margin-top: 80px;
-            background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
-        }
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 40px 16px 60px;
+      background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
+    }
 
-        h1 { color: #ff4fa3; }
+    .card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 22px;
+      padding: 26px 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
 
-        input {
-            padding: 10px;
-            font-size: 18px;
-            width: 160px;
-            border-radius: 15px;
-            border: 2px solid #ffb6d9;
-        }
+    h1 {
+      margin: 0 0 12px;
+      color: #ff4fa3;
+      font-size: 30px;
+    }
 
-        button {
-            padding: 10px 18px;
-            font-size: 16px;
-            margin: 8px;
-            border: none;
-            background: #ff4fa3;
-            color: white;
-            border-radius: 20px;
-            cursor: pointer;
-        }
+    .subtitle {
+      margin: 0 0 18px;
+      opacity: 0.75;
+    }
 
-        button:hover { background: #e63b8c; }
+    .row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
 
-        #message { font-size: 20px; margin-top: 15px; }
-.support-section {
-    margin-top: 60px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 20px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
+    input {
+      padding: 10px 12px;
+      font-size: 18px;
+      width: 170px;
+      border-radius: 15px;
+      border: 2px solid #ffb6d9;
+      outline: none;
+    }
 
-.support-section h2 {
-    color: #ff4fa3;
-}
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      background: #ff4fa3;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-.support-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 12px 20px;
-    background: #ff4fa3;
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: 600;
-}
+    button:hover {
+      background: #e63b8c;
+    }
 
-.support-btn:hover {
-    background: #e63b8c;
-}
-</style>
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      font-size: 20px;
+      margin: 14px 0 6px;
+      min-height: 26px;
+    }
+
+    #attempts {
+      margin: 0;
+      opacity: 0.85;
+      min-height: 22px;
+    }
+
+    .support-section {
+      margin-top: 18px;
+      padding: 18px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 18px;
+    }
+
+    .support-title {
+      margin: 0 0 8px;
+      color: #ff4fa3;
+      font-size: 20px;
+    }
+
+    .support-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 18px;
+      background: #ff4fa3;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .support-btn:hover {
+      background: #e63b8c;
+    }
+
+    .tiny {
+      margin: 10px 0 0;
+      font-size: 14px;
+      opacity: 0.75;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="card">
+    <h1>🐻 Bhalu Guess the Number</h1>
+    <p class="subtitle">Pick a number from <b>1</b> to <b>100</b> and see if you can win.</p>
 
-<img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="120">
+    <div class="row">
+      <input type="number" id="guessInput" placeholder="Enter guess" min="1" max="100" />
+      <button id="submitBtn">Submit</button>
+      <button id="resetBtn">Play Again</button>
+    </div>
 
-<h1>Guess the Number (1–100)</h1>
+    <p id="message"></p>
+    <p id="attempts"></p>
 
-<input type="number" id="guessInput" placeholder="Enter your guess">
-<br>
-<button id="submitBtn">Submit Guess</button>
-<button id="resetBtn">Play Again</button>
+    <div class="support-section">
+      <p class="support-title">💖 Enjoying the game?</p>
+      <p>If this made you smile, support future updates!</p>
 
-<p id="message"></p>
-<p id="attempts"></p>
+      <a class="support-btn" href="https://buymeacoffee.com/bhalu" target="_blank" rel="noopener noreferrer">
+        ☕ Support the Developer
+      </a>
 
-<script>
-let randomNumber = Math.floor(Math.random() * 100) + 1;
-let attempts = 0;
+      <p class="tiny">Planned updates: hard mode, score tracking, and more mini-games.</p>
+    </div>
+  </div>
 
-const guessInput = document.getElementById("guessInput");
-const message = document.getElementById("message");
-const attemptsText = document.getElementById("attempts");
-const submitBtn = document.getElementById("submitBtn");
-const resetBtn = document.getElementById("resetBtn");
+  <script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
 
-submitBtn.addEventListener("click", checkGuess);
-resetBtn.addEventListener("click", resetGame);
+    const guessInput = document.getElementById("guessInput");
+    const messageEl = document.getElementById("message");
+    const attemptsEl = document.getElementById("attempts");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
 
-function checkGuess() {
-    let guess = Number(guessInput.value);
-
-    if (!guess || guess < 1 || guess > 100) {
-        message.innerText = "Enter a number between 1 and 100";
-        return;
+    function setMessage(text) {
+      messageEl.innerText = text;
     }
 
-    attempts++;
+    function updateAttempts() {
+      attemptsEl.innerText = attempts > 0 ? ("Attempts: " + attempts) : "";
+    }
 
-    if (guess === randomNumber) {
-        message.innerText = "🎉 You win!";
+    function checkGuess() {
+      const guess = Number(guessInput.value);
+
+      // Validate
+      if (!guess || guess < 1 || guess > 100) {
+        setMessage("Type a number from 1 to 100 🙂");
+        return;
+      }
+
+      attempts++;
+      updateAttempts();
+
+      if (guess === randomNumber) {
+        setMessage(`🎉 You win! The number was ${randomNumber}.`);
         guessInput.disabled = true;
         submitBtn.disabled = true;
-    }
-    else if (guess > randomNumber) {
-        message.innerText = "Too high!";
-    }
-    else {
-        message.innerText = "Too low!";
+      } else if (guess > randomNumber) {
+        setMessage("Too high!");
+      } else {
+        setMessage("Too low!");
+      }
     }
 
-    attemptsText.innerText = "Attempts: " + attempts;
-}
+    function resetGame() {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      guessInput.value = "";
+      guessInput.disabled = false;
+      submitBtn.disabled = false;
+      setMessage("");
+      updateAttempts();
+      guessInput.focus();
+    }
 
-function resetGame() {
-    randomNumber = Math.floor(Math.random() * 100) + 1;
-    attempts = 0;
-    message.innerText = "";
-    attemptsText.innerText = "";
-    guessInput.value = "";
-    guessInput.disabled = false;
-    submitBtn.disabled = false;
-}
-</script>
+    // Wire up buttons
+    submitBtn.addEventListener("click", checkGuess);
+    resetBtn.addEventListener("click", resetGame);
 
-<div class="support-section">
-    <h2>💖 Enjoying the game?</h2>
-    <p>If this made you laugh, you can support future updates.</p>
-    
-    <a href="https://buymeacoffee.com/Bhalu" target="_blank" class="support-btn">
-        ☕ Buy Me a Coffee
-    </a>
-</div>
+    // Enter key submits
+    guessInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") checkGuess();
+    });
+
+    // Initial state
+    resetGame();
+  </script>
 </body>
 </html>
